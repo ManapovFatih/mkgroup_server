@@ -27,7 +27,7 @@ export class CreateProductDto {
     price: number;
 
 	@ApiProperty({
-        example: 'Good oil',
+        example: 'Хороший гараж для техники',
 		required: false,
     })
 	@IsOptional()

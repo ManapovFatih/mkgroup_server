@@ -18,7 +18,7 @@ export class ProductService {
     ) {}
 
     async create(createProductDto: CreateProductDto, image: Express.Multer.File) {
-        const { setImageToNull, specificationIds, optionIds, ...createDto } = createProductDto;
+        const { setImageToNull, ...createDto } = createProductDto;
         const filename = await this.imageService.updateImage(image, 'products');
         return await this.prismaService.product.create({
             data: {
