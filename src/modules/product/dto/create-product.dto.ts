@@ -54,8 +54,8 @@ export class CreateProductDto {
     setImageToNull: boolean;
 
     @ApiProperty({
-        example: 'Ангары',
+        example: 1,
     })
     @IsString()
-    category: string;
+    categoryId:  number;
 }

@@ -3,18 +3,46 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateProductDto {
     @ApiProperty({
-        example: 'HIGHTEC GTS SPEZIAL SAE 20W-50',
-		required: false,
+        example: 'Быстровозводимый склад 12x12',
     })
     @IsOptional()
     @IsString()
     name: string;
 
     @ApiProperty({
+        example: '12x12 м',
+    })
+    @IsOptional()
+    @IsString()
+    size: string;
+
+    @ApiProperty({
+        example: 'Предзаказ',
+    })
+    @IsOptional()
+    @IsString()
+    availability: string;
+
+    @ApiProperty({
+        example: 890,
+    })
+    @IsOptional()
+    @IsNumber()
+    price: number;
+
+	@ApiProperty({
+        example: 'Хороший гараж для техники',
+		required: false,
+    })
+	@IsOptional()
+    @IsString()
+    description: string;
+
+    @ApiProperty({
         type: 'string',
         format: 'binary',
         example: 'Image from Form-Data',
-        description: 'Image of an event',
+        description: 'Image of product',
         required: false,
     })
     @IsOptional()
@@ -29,51 +57,10 @@ export class UpdateProductDto {
     @IsBoolean()
     setImageToNull: boolean;
 
-	@ApiProperty({
-        example: 'Good oil',
-		required: false,
+    @ApiProperty({
+        example: 1,
     })
-	@IsOptional()
+    @IsOptional()
     @IsString()
-    description: string;
-
-	@ApiProperty({
-        example: 12344321,
-		required: false,
-    })
-	@IsOptional()
-    @IsNumber()
-    article: number;
-
-    @ApiProperty({
-        example: 890,
-		required: false,
-    })
-    @IsOptional()
-    @IsNumber()
-    price: number;
-
-	@ApiProperty({
-        example: 1234,
-		required: false,
-    })
-    @IsOptional()
-    @IsNumber()
-    priceWithoutDiscount: number;
-
-    @ApiProperty({
-        example: [1, 2],
-		required: false,
-    })
-    @IsOptional()
-    @IsArray()
-    specificationIds: string[];
-
-    @ApiProperty({
-        example: [1, 2, 4, 5],
-		required: false,
-    })
-    @IsOptional()
-    @IsArray()
-    optionIds: string[];
+    categoryId:  number;
 }

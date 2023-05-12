@@ -7,7 +7,7 @@ CREATE TABLE "Product" (
     "price" INTEGER NOT NULL,
     "description" TEXT,
     "image" TEXT,
-    "category" TEXT,
+    "categoryId" INTEGER NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
@@ -20,3 +20,6 @@ CREATE TABLE "Category" (
 
     CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
 );
+
+-- AddForeignKey
+ALTER TABLE "Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE CASCADE ON UPDATE CASCADE;

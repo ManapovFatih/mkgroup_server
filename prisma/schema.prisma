@@ -17,12 +17,14 @@ model Product {
     price                  Int
     description            String?
     image                  String?
-    category               String?
+    categoryId             Int
+    category               Category @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Category {
     id             Int             @id @default(autoincrement())
     name           String
     image          String?
+    product        Product[]
 }
 
