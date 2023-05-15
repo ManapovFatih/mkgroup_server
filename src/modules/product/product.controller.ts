@@ -59,15 +59,6 @@ export class ProductController {
         return await this.productService.findById(id);
     }
 
-	@ApiOperation({ summary: 'Get with params preloads' })
-    @ApiOkResponse({
-        type: ProductEntity,
-    })
-    @Get('/withParameters/:id')
-    async getWithParams(@Param('id', ParseIntPipe) id: number) {
-        return await this.productService.findByIdWithParamPreloads(id);
-    }
-
     @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Create product' })
     @ApiOkResponse({

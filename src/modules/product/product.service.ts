@@ -57,13 +57,6 @@ export class ProductService {
         });
     }
 
-    async findByIdWithParamPreloads(id: number) {
-        const product = await this.prismaService.product.findUniqueOrThrow({
-            where: {
-                id,
-            },
-        });
-    }
 
     async findAll() {
         return await this.prismaService.product.findMany();
