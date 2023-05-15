@@ -11,12 +11,14 @@ export class CreateProductDto {
     @ApiProperty({
         example: '12x12 м',
     })
+    @IsOptional()
     @IsString()
     size: string;
 
     @ApiProperty({
         example: 'Предзаказ',
     })
+    @IsOptional()
     @IsString()
     availability: string;
 
@@ -56,6 +58,6 @@ export class CreateProductDto {
     @ApiProperty({
         example: 1,
     })
-    @IsString()
+    @IsNumber()
     categoryId:  number;
 }

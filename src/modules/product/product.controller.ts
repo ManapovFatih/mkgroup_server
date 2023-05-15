@@ -36,7 +36,7 @@ export class ProductController {
     @ApiOkResponse({
         type: ProductPaginationResultEntity,
     })
-    @Get('paginate')
+    @Get()
     async paginate(@Query() paginateProductsDto: PaginateProductsDto) {
         return await this.productService.paginate(paginateProductsDto);
     }

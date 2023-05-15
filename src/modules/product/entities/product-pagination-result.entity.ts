@@ -12,4 +12,24 @@ export class ProductPaginationResultEntity extends PaginationResult<ProductEntit
         example: 50,
     })
     maxPrice: number;
+
+    @ApiProperty({
+        example: 50,
+    })
+    prevPage: number;
+
+    @ApiProperty({
+        example: 50,
+    })
+    currentPage: number;
+
+    @ApiProperty({
+        example: 50,
+    })
+    nextPage: number;
+
+    @ApiProperty({
+        example: 50,
+    })
+    lastPage: number;
 }

@@ -95,7 +95,11 @@ export class ProductService {
         const count = await this.prismaService.product.count({
             where: whereObject,
         });
-
+        const currentPage = paginateProductsDto.page;
+        const totalPages = Math.ceil(count / paginateProductsDto.limit);
+        const nextPage = currentPage < totalPages ? currentPage + 1 : null;
+        const prevPage = currentPage > 1 ? currentPage - 1 : null;
+        const lastPage = totalPages;
         orderObject[key] = direction;
 
         const body = await this.prismaService.product.findMany({
@@ -108,6 +112,10 @@ export class ProductService {
         return {
             meta: {
                 total: count,
+                prevPage,
+                currentPage,
+                nextPage,
+                lastPage,
                 minPrice: meta._min.price,
                 maxPrice: meta._max.price,
             },

@@ -9,8 +9,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('RoweOil API')
-    .setDescription('RoweOil')
+    .setTitle('mkgroup API')
+    .setDescription('mkgroup')
     .setVersion('1.0.1')
     .addTag('APP')
     .build();

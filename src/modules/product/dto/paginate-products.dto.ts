@@ -6,22 +6,6 @@ import { ApiProperty } from '@nestjs/swagger';
 export class PaginateProductsDto extends PaginationConfig<Product> {
     @ApiProperty({
 		required: false,
-        example: [1, 2, 3],
-    })
-    @IsOptional()
-    @IsString()
-    options: string;
-
-    @ApiProperty({
-		    required: false,
-        example: [1, 2, 3],
-    })
-    @IsOptional()
-    @IsString()
-    specifications: string;
-
-    @ApiProperty({
-		required: false,
         example: 10,
     })
     @IsOptional()

@@ -43,8 +43,8 @@ model Verification {
 model Product {
     id                     Int                      @id @default(autoincrement())
     name                   String
-    size                   String
-    availability           String
+    size                   String?
+    availability           String?
     price                  Int
     description            String?
     image                  String?
