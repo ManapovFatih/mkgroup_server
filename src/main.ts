@@ -15,7 +15,11 @@ async function bootstrap() {
     .addTag('APP')
     .build();
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('api/docs', app, swaggerDocument);
+  SwaggerModule.setup('api/docs', app, swaggerDocument, {
+    swaggerOptions: {
+      tagsSorter: 'alpha',
+      operationsSorter: 'alpha',
+    },});
   const PORT = process.env.PORT || 5000;
   await app.listen(PORT, () => {
     logger.log(`Server is running on port: ${PORT}`);
