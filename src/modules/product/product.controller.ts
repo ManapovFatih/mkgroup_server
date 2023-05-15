@@ -41,14 +41,6 @@ export class ProductController {
         return await this.productService.paginate(paginateProductsDto);
     }
 
-	@ApiOperation({ summary: 'Get products by array of ids' })
-    @ApiOkResponse({
-        type: [ProductEntity],
-    })
-    @Get('byIds')
-    async getByIds(@Query() getProductsByIdsDto: GetProductsByIdsDto) {
-        return await this.productService.getByIds(getProductsByIdsDto);
-    }
 
 	@ApiOperation({ summary: 'Get product' })
     @ApiOkResponse({

@@ -38,17 +38,6 @@ export class ProductService {
         });
     }
 
-    async getByIds(getProductsByIdsDto: GetProductsByIdsDto) {
-        const ids: number[] = JSON.parse(getProductsByIdsDto.ids);
-        return await this.prismaService.product.findMany({
-            where: {
-                id: {
-                    in: ids,
-                },
-            },
-        });
-    }
-
     async findById(id: number) {
         return await this.prismaService.product.findUniqueOrThrow({
             where: {
