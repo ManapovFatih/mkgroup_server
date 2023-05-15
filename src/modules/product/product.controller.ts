@@ -5,6 +5,7 @@ import { ProductEntity } from './entities/product.entity';
 import {
     Body,
     Controller,
+    Delete,
     Get,
     Param,
     ParseIntPipe,
@@ -20,6 +21,7 @@ import { ProductService } from './product.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FindProductDto } from './dto/find-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { GetProductsByIdsDto } from './dto/products-get-by-ids.dto';
 
 @ApiTags('Product')
@@ -66,6 +68,7 @@ export class ProductController {
         return await this.productService.findByIdWithParamPreloads(id);
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Create product' })
     @ApiOkResponse({
         type: ProductEntity,
@@ -86,6 +89,7 @@ export class ProductController {
         return await this.productService.search(findProductDto);
     }
     
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Update product' })
     @ApiOkResponse({
         type: ProductEntity,
@@ -99,5 +103,15 @@ export class ProductController {
         @Body() updateProductDto: UpdateProductDto,
     ) {
         return await this.productService.update(id, updateProductDto, image);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @ApiOperation({ summary: 'Delete product by id' })
+    @ApiOkResponse({
+        type: ProductEntity,
+    })
+    @Delete(':id')
+    async delete(@Param('id', ParseIntPipe) id: number) {
+        return await this.productService.delete(id);
     }
 }

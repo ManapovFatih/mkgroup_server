@@ -88,7 +88,7 @@ export class ProductService {
         if (paginateProductsDto.minPrice || paginateProductsDto.maxPrice) {
             whereObject['price'] = {
                 gte: paginateProductsDto.minPrice || 0,
-                lte: paginateProductsDto.maxPrice || 50000,
+                lte: paginateProductsDto.maxPrice || {},
             };
         }
 

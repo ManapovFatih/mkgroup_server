@@ -8,7 +8,7 @@ import {
     ParseIntPipe,
     Patch,
     Post,
-    Query,
+    Delete,
     UploadedFile,
     UseGuards,
     UseInterceptors,
@@ -17,6 +17,7 @@ import { ApiConsumes, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags }
 import { CategoryService } from './category.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('Category')
 @Controller('category')
@@ -41,6 +42,7 @@ export class CategoryController {
         return await this.categoryService.findAll();
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Create category' })
     @ApiCreatedResponse({
         type: CategoryEntity,
@@ -52,6 +54,7 @@ export class CategoryController {
         return await this.categoryService.create(createCategoryDto, image);
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Update category' })
     @ApiOkResponse({
         type: CategoryEntity,
@@ -65,5 +68,15 @@ export class CategoryController {
         @Body() updateCategoryDto: UpdateCategoryDto,
     ) {
         return await this.categoryService.update(id, updateCategoryDto, image);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @ApiOperation({ summary: 'Delete category by id' })
+    @ApiOkResponse({
+        type: CategoryEntity,
+    })
+    @Delete(':id')
+    async delete(@Param('id', ParseIntPipe) id: number) {
+        return await this.categoryService.delete(id);
     }
 }

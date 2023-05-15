@@ -8,6 +8,37 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model User {
+  id           Int           @id @default(autoincrement())
+  email        String?       @unique
+  image        String?
+  password     Password?
+  session      Session[]
+  verification Verification?
+}
+
+model Password {
+  userId   Int    @unique
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  password String
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  refreshToken String   @unique
+  fingerprint  String   @unique
+  ip           String
+  userAgent    String
+  expiresAt    DateTime
+}
+
+model Verification {
+  userId             Int     @unique
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  forgotPasswordCode String?
+}
 
 model Product {
     id                     Int                      @id @default(autoincrement())

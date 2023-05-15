@@ -1,1 +1,1 @@
-export type UploadsFolder = 'categories' | 'products';
+export type UploadsFolder = 'categories' | 'products' | 'users';
