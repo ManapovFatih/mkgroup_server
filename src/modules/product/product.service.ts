@@ -1,5 +1,3 @@
-import { CategoryService } from './../category/category.service';
-import { GetProductsByIdsDto } from './dto/products-get-by-ids.dto';
 import { PaginateProductsDto } from './dto/paginate-products.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Injectable } from '@nestjs/common';
@@ -14,11 +12,10 @@ export class ProductService {
     constructor(
         private readonly prismaService: PrismaService,
         private readonly imageService: ImageService,
-        private readonly categoryService: CategoryService,
     ) {}
 
     async create(createProductDto: CreateProductDto, image: Express.Multer.File) {
-        const { setImageToNull, ...createDto } = createProductDto;
+        const { ...createDto } = createProductDto;
         const filename = await this.imageService.updateImage(image, 'products');
         return await this.prismaService.product.create({
             data: {

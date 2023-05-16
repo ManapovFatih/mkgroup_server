@@ -46,14 +46,6 @@ export class CreateProductDto {
     @IsOptional()
     image: Express.Multer.File;
 
-    @ApiProperty({
-        example: false,
-        description: 'If true, setting image to null, else default behaviour',
-		required: false,
-    })
-    @IsOptional()
-    @IsBoolean()
-    setImageToNull: boolean;
 
     @ApiProperty({
         example: 1,
