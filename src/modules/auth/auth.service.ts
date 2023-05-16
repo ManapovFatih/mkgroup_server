@@ -1,4 +1,3 @@
-import { PasswordService } from '../users/password/password.service';
 import AuthResult from '../../interfaces/AuthResult.interface';
 import { CreateUserDto } from '../../modules/users/dto/create-user.dto';
 import { BrowserDataDto } from '../users/session/dto/browser-data.dto';
@@ -22,12 +21,11 @@ export class AuthService {
         private jwtService: JwtService,
         private tokenService: TokenService,
         private sessionService: SessionService,
-        private passwordService: PasswordService,
     ) {}
     private async validateLogin(userDto: LogInUserDto): Promise<User> {
         const user = await this.usersService.findOneByEmail(userDto.email);
         if (user) {
-            const userPassword = await this.passwordService.findOneByUserId(user.id);
+            const userPassword = await this.usersService.findOneByUserId(user.id);
             const isPasswordValid = await bcrypt.compare(userDto.password, userPassword.password);
             if (isPasswordValid) {
                 return user;

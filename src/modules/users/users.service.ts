@@ -4,6 +4,7 @@ import { User } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Injectable } from '@nestjs/common';
+import { Password } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -43,6 +44,14 @@ export class UsersService {
         });
     }
 
+    async findOneByUserId(userId: number): Promise<Password> {
+        return await this.prismaService.password.findUnique({
+            where: {
+                userId: userId,
+            },
+        });
+    }
+    
     async update(id: number, updateUserDto: UpdateUserDto, image: Express.Multer.File): Promise<User> {
         const userBeforeUpdate = await this.prismaService.user.findFirstOrThrow({
             where: { id },

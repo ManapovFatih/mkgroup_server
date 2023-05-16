@@ -14,7 +14,6 @@ model User {
   image        String?
   password     Password?
   session      Session[]
-  verification Verification?
 }
 
 model Password {
@@ -32,12 +31,6 @@ model Session {
   ip           String
   userAgent    String
   expiresAt    DateTime
-}
-
-model Verification {
-  userId             Int     @unique
-  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  forgotPasswordCode String?
 }
 
 model Product {

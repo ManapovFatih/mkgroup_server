@@ -27,17 +27,11 @@ CREATE TABLE "Session" (
 );
 
 -- CreateTable
-CREATE TABLE "Verification" (
-    "userId" INTEGER NOT NULL,
-    "forgotPasswordCode" TEXT
-);
-
--- CreateTable
 CREATE TABLE "Product" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "size" TEXT NOT NULL,
-    "availability" TEXT NOT NULL,
+    "size" TEXT,
+    "availability" TEXT,
     "price" INTEGER NOT NULL,
     "description" TEXT,
     "image" TEXT,
@@ -67,17 +61,11 @@ CREATE UNIQUE INDEX "Session_refreshToken_key" ON "Session"("refreshToken");
 -- CreateIndex
 CREATE UNIQUE INDEX "Session_fingerprint_key" ON "Session"("fingerprint");
 
--- CreateIndex
-CREATE UNIQUE INDEX "Verification_userId_key" ON "Verification"("userId");
-
 -- AddForeignKey
 ALTER TABLE "Password" ADD CONSTRAINT "Password_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Verification" ADD CONSTRAINT "Verification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE CASCADE ON UPDATE CASCADE;
