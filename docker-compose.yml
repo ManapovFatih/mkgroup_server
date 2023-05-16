@@ -1,15 +1,24 @@
-version: "3.9"  # optional since v1.27.0
+version: '3.9'
 services:
-  web:
-    build: .
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "5000:5000"
-    volumes:
-      - .:/code
-      - logvolume01:/var/log
+      - 5000:5000
     depends_on:
-      - prisma
-  redis:
-    image: getting-started
-volumes:
-  logvolume01: {}
+      - postgres
+    volumes:  
+      - ./static:/usr/src/app/static
+
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_USER: postgres
+      PGDATA: '/var/lib/postgresql/data/pgdata'
+    volumes:  
+      - ~/Database/Postgres:/var/lib/postgresql/data

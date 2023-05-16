@@ -5,4 +5,5 @@ COPY package*.json ./
 RUN npm ci
 COPY . .
 EXPOSE 5000
-CMD [ "node", "dist/main.js" ]
+RUN npm run build
+CMD [ "npm", "run", "start:migrate:prod" ]
