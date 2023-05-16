@@ -44,33 +44,33 @@ export class AuthController {
         return { user: authData.user, accessToken: authData.tokens.accessToken };
     }
 
-    // @ApiOperation({ summary: 'Sign Up/Registration ' })
-    // @ApiResponse({
-    //     status: 201,
-    //     type: AuthResponseDto,
-    // })
-    // @ApiConsumes('multipart/form-data')
-    // @UseInterceptors(FileInterceptor('image'))
-    // @Post('register')
-    // async register(
-    //     @CustomHeaders()
-    //     headers: ValidateCustomHeadersDto,
-    //     @Req() request: Request,
-    //     @Body() userDto: RegisterUserDto,
-    //     @Res({ passthrough: true }) res: Response,
-    //     @UploadedFile() image: Express.Multer.File,
-    // ) {
-    //     const browserDataDto: BrowserDataDto = {
-    //         userAgent: request.get('user-agent'),
-    //         ip: request.ip,
-    //         fingerprint: request.get('fingerprint'),
-    //     };
+    @ApiOperation({ summary: 'Sign Up/Registration ' })
+    @ApiResponse({
+        status: 201,
+        type: AuthResponseDto,
+    })
+    @ApiConsumes('multipart/form-data')
+    @UseInterceptors(FileInterceptor('image'))
+    @Post('register')
+    async register(
+        @CustomHeaders()
+        headers: ValidateCustomHeadersDto,
+        @Req() request: Request,
+        @Body() userDto: RegisterUserDto,
+        @Res({ passthrough: true }) res: Response,
+        @UploadedFile() image: Express.Multer.File,
+    ) {
+        const browserDataDto: BrowserDataDto = {
+            userAgent: request.get('user-agent'),
+            ip: request.ip,
+            fingerprint: request.get('fingerprint'),
+        };
 
-    //     const authData: AuthResult = await this.authService.register(userDto, browserDataDto, image);
-    //     const expires = this.tokenService.getNewExpiresAtForRefreshToken();
-    //     res.cookie('refreshToken', authData.tokens.refreshToken, { ...refreshCookieOptions, expires: expires });
-    //     return { user: authData.user, accessToken: authData.tokens.accessToken };
-    // }
+        const authData: AuthResult = await this.authService.register(userDto, browserDataDto, image);
+        const expires = this.tokenService.getNewExpiresAtForRefreshToken();
+        res.cookie('refreshToken', authData.tokens.refreshToken, { ...refreshCookieOptions, expires: expires });
+        return { user: authData.user, accessToken: authData.tokens.accessToken };
+    }
 
     @ApiOperation({ summary: 'Log out' })
     @ApiResponse({

@@ -55,27 +55,27 @@ export class AuthService {
         return { user: user, tokens };
     }
 
-    // async register(
-    //     registerUserDto: RegisterUserDto,
-    //     browserDataDto: BrowserDataDto,
-    //     image: Express.Multer.File,
-    // ): Promise<AuthResult> {
-    //     const candidate: User = await this.usersService.findOneByEmail(registerUserDto.email);
-    //     if (candidate) {
-    //         throw new BadRequestException('User with this email already exists');
-    //     }
-    //     const userDto: CreateUserDto = {
-    //         email: registerUserDto.email,
-    //     };
-    //     const password = registerUserDto.password;
+    async register(
+        registerUserDto: RegisterUserDto,
+        browserDataDto: BrowserDataDto,
+        image: Express.Multer.File,
+    ): Promise<AuthResult> {
+        const candidate: User = await this.usersService.findOneByEmail(registerUserDto.email);
+        if (candidate) {
+            throw new BadRequestException('User with this email already exists');
+        }
+        const userDto: CreateUserDto = {
+            email: registerUserDto.email,
+        };
+        const password = registerUserDto.password;
 
-    //     const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-    //     const user: User = await this.usersService.create(userDto, hashedPassword, image);
-    //     const tokens = await this.tokenService.createTokensAndSession(user, browserDataDto);
+        const user: User = await this.usersService.create(userDto, hashedPassword, image);
+        const tokens = await this.tokenService.createTokensAndSession(user, browserDataDto);
 
-    //     return { user: user, tokens };
-    // }
+        return { user: user, tokens };
+    }
 
     async logout(refreshToken: Token) {
         await this.sessionService.deleteSessionByRefreshToken(refreshToken);
