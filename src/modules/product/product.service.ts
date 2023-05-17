@@ -14,13 +14,13 @@ export class ProductService {
         private readonly imageService: ImageService,
     ) {}
 
-    async create(createProductDto: CreateProductDto, image: Express.Multer.File) {
+    async create(createProductDto: CreateProductDto, images: Express.Multer.File[]) {
         const { ...createDto } = createProductDto;
-        const filename = await this.imageService.updateImage(image, 'products');
+        const filenames = await Promise.all(images.map(image => this.imageService.updateImage(image, 'products')));
         return await this.prismaService.product.create({
             data: {
                 ...createDto,
-                image: filename,
+                images: filenames,
             },
         });
     }
@@ -54,9 +54,6 @@ export class ProductService {
         // need a typings here
         const orderObject = {};
         const whereObject = {};
-        const meta = await this.prismaService.product.aggregate({
-            where: whereObject,
-        });
 
         if (paginateProductsDto.categoryId) {
             whereObject['categoryId'] = paginateProductsDto.categoryId;
@@ -100,17 +97,20 @@ export class ProductService {
         });
     }
 
-    async update(id: number, updateProductDto: UpdateProductDto, image: Express.Multer.File) {
+    async update(id: number, updateProductDto: UpdateProductDto, images: Express.Multer.File[]) {
         const product = await this.findById(id);
         const { setImageToNull, ...createDto } = updateProductDto;
-        const filename = await this.imageService.updateImage(image, 'products', product.image, setImageToNull);
+        const filenames = await Promise.all(images.map(async (image, index) => {
+            const filename = await this.imageService.updateImage(image, 'products', product.images[index], setImageToNull);
+            return filename;
+          }));
         return await this.prismaService.product.update({
             where: {
                 id,
             },
             data: {
                 ...createDto,
-                image: filename,
+                images: filenames,
             },
         });
     }

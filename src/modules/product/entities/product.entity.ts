@@ -35,7 +35,7 @@ export class ProductEntity implements Product {
     @ApiProperty({
         example: 'products/asd9f91asf-img1.png',
     })
-    image: string;
+    images: string[];
 
     @ApiProperty({
         example: 1,

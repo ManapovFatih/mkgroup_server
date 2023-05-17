@@ -13,12 +13,13 @@ import {
     Post,
     Query,
     UploadedFile,
+    UploadedFiles,
     UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
 import { ApiConsumes, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ProductService } from './product.service';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { FindProductDto } from './dto/find-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -56,10 +57,10 @@ export class ProductController {
         type: ProductEntity,
     })
     @ApiConsumes('multipart/form-data')
-    @UseInterceptors(FileInterceptor('image'))
+    @UseInterceptors(FilesInterceptor('images'))
     @Post()
-    async create(@UploadedFile() image: Express.Multer.File, @Body() createProductDto: CreateProductDto) {
-        return await this.productService.create(createProductDto, image);
+    async create(@UploadedFiles() images: Express.Multer.File[], @Body() createProductDto: CreateProductDto) {
+        return await this.productService.create(createProductDto, images);
     }
 
     @ApiOperation({ summary: 'Find product' })
@@ -77,14 +78,14 @@ export class ProductController {
         type: ProductEntity,
     })
     @ApiConsumes('multipart/form-data')
-    @UseInterceptors(FileInterceptor('image'))
+    @UseInterceptors(FilesInterceptor('images'))
     @Patch(':id')
     async update(
         @Param('id', ParseIntPipe) id: number,
-        @UploadedFile() image: Express.Multer.File,
+        @UploadedFiles() images: Express.Multer.File[],
         @Body() updateProductDto: UpdateProductDto,
     ) {
-        return await this.productService.update(id, updateProductDto, image);
+        return await this.productService.update(id, updateProductDto, images);
     }
 
     @UseGuards(JwtAuthGuard)
