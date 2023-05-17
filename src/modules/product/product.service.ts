@@ -55,20 +55,11 @@ export class ProductService {
         const orderObject = {};
         const whereObject = {};
         const meta = await this.prismaService.product.aggregate({
-            _min: {
-                price: true,
-            },
-            _max: {
-                price: true,
-            },
             where: whereObject,
         });
 
-        if (paginateProductsDto.minPrice || paginateProductsDto.maxPrice) {
-            whereObject['price'] = {
-                gte: paginateProductsDto.minPrice || 0,
-                lte: paginateProductsDto.maxPrice || {},
-            };
+        if (paginateProductsDto.categoryId) {
+            whereObject['categoryId'] = paginateProductsDto.categoryId;
         }
 
         const count = await this.prismaService.product.count({
@@ -95,8 +86,7 @@ export class ProductService {
                 currentPage,
                 nextPage,
                 lastPage,
-                minPrice: meta._min.price,
-                maxPrice: meta._max.price,
+                categoryId: paginateProductsDto.categoryId,
             },
             body,
         };

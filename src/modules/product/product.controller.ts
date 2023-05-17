@@ -22,7 +22,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { FindProductDto } from './dto/find-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { GetProductsByIdsDto } from './dto/products-get-by-ids.dto';
 
 @ApiTags('Product')
 @Controller('product')

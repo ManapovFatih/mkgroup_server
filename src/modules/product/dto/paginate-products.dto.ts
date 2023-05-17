@@ -6,17 +6,9 @@ import { ApiProperty } from '@nestjs/swagger';
 export class PaginateProductsDto extends PaginationConfig<Product> {
     @ApiProperty({
 		required: false,
-        example: 10,
-    })
-    @IsOptional()
-    @IsNumber()
-    minPrice: number;
-
-    @ApiProperty({
-		required: false,
         example: 50,
     })
     @IsOptional()
     @IsNumber()
-    maxPrice: number;
+    categoryId: number;
 }
