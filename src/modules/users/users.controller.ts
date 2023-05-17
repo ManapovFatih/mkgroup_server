@@ -27,13 +27,4 @@ export class UsersController {
     ) {
         return await this.usersService.update(request.user.id, updateUserDto, image);
     }
-
-    @ApiOperation({ summary: 'get info of a logged user' })
-    @ApiOkResponse({
-        type: UserInfoDto,
-    })
-    @Get('me')
-    async getUserSelfInfo(@Req() request: Request) {
-        return await this.usersService.findOne(request.user.id);
-    }
 }
