@@ -5,6 +5,7 @@ import { ProductModule } from './modules/product/product.module';
 import { CategoryModule } from './modules/category/category.module';
 import { PrismaService } from './modules/database/prisma.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { TableModule } from './modules/table/table.module';
 
 @Module({
     imports: [
@@ -12,6 +13,7 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
         CategoryModule,
         AuthModule,
         UsersModule,
+        TableModule,
     ],
     controllers: [],
     providers: [PrismaService],
