@@ -70,6 +70,6 @@ export class UpdateProductDto {
     example: 1,
   })
   @IsOptional()
-  @IsString()
+  @IsNumber()
   categoryId: number;
 }
